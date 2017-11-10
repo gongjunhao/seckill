@@ -1,0 +1,28 @@
+{
+  "name": "秒杀助手",
+  "description": "购物秒杀辅助，提升秒杀几率！",
+  "version": "0.0.1",
+  "permissions": [
+    "tabs",
+    "storage",
+    "webNavigation",
+    "notifications",
+    "activeTab",
+    "cookies",
+    "http://*/*",
+    "https://*/*"
+  ],
+  "background": {
+    "scripts": [
+    "js/jquery.min.js",
+    "js/utils.js"
+    ]
+  },
+  "browser_action": {
+    "default_icon": "images/seckill-16.png",
+    "default_title": "秒杀助手",
+    "default_popup": "index.html"
+  },
+  "manifest_version": 2
+}
+
