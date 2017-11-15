@@ -14,22 +14,24 @@
   ],
   "background": {
     "scripts": [
-    "js/jquery.min.js",
-    "js/utils.js"
+    "lib/jquery-3.2.1.min.js",
+    "lib/dexie.js",
+    "lib/My97DatePicker/WdatePicker.js"
     ]
   },
   "content_scripts": [
     {
       "matches": ["http://*/*", "https://*/*"], 
-      "js": ["js/newTask.js"],
-      "css" : ["css/form.css"]
+      "js": ["lib/jquery-3.2.1.min.js","lib/My97DatePicker/WdatePicker.js", "lib/dexie.js","js/newTask.js"],
+      "css" : ["css/form.css", "lib/My97DatePicker/skin/WdatePicker.css"]
     }
   ],
   "browser_action": {
-    "default_icon": "images/seckill-16.png",
+    "default_icon": "image/seckill-16.png",
     "default_title": "秒杀助手",
     "default_popup": "index.html"
   },
-  "manifest_version": 2
+  "manifest_version": 2,
+  "web_accessible_resources": ["page/newTask.html", "lib/My97DatePicker/skin/WdatePicker.css"]
 }
 
