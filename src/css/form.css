@@ -1,0 +1,72 @@
+#secKillForm {
+    position: absolute;
+    bottom: 5px;
+    margin: auto;
+    width: 98%;
+    height: 45px;
+    padding: 2px 10px;
+    box-shadow: 1px 2px 2px #888888;
+    border-radius: 5px;
+    font-size: 12px;
+    font-family: 微软雅黑 Microsoft Himalaya Consolas;
+    overflow: hidden;
+    background: -webkit-linear-gradient(top, rgba(255, 175, 75, 1) 0%, rgba(255, 173, 10, 1) 8%, rgba(255, 146, 10, 1) 52%, rgba(255, 146, 10, 1) 96%, rgba(255, 173, 10, 1) 98%, rgba(255, 146, 10, 1) 100%);
+}
+
+#secKillForm .logo {
+    font-size: 14px;
+    color: #ff803b;
+    word-break: break-all;
+    width: 30px;
+    padding: 3px 10px;
+    font-weight: bolder;
+    background-color: #27ff09;
+    box-shadow: 1px 1px 1px -1px #888888 inset;
+    border-radius: 4px;
+    float: left;
+}
+
+#secKillForm .filed {
+    color: #fff;
+    float: left;
+    padding: 3px 10px;
+}
+
+#secKillForm .name {
+    color: black;
+    font-weight: bolder;
+}
+
+#secKillForm .button {
+    margin: 10px 5px;
+    font-size: 14px;
+    color: #27ff09;
+    text-align: center;
+    word-break: break-all;
+    width: 50px;
+    padding: 3px 10px;
+    height: 50%;
+    cursor: pointer;
+    font-weight: bolder;
+    background-color: #6A6AFF;
+    box-shadow: 1px 1px 1px #888888;
+    border-radius: 4px;
+    float: left;
+}
+
+#secKillForm .submit {
+    margin: 10px 5px;
+    font-size: 16px;
+    color: #27ff09;
+    text-align: center;
+    word-break: break-all;
+    width: 50px;
+    padding: 3px 10px;
+    height: 50%;
+    cursor: pointer;
+    font-weight: bolder;
+    background-color: blueviolet;
+    box-shadow: 1px 1px 1px #888888;
+    border-radius: 4px;
+    float: left;
+}
