@@ -11,6 +11,7 @@
     font-family: 微软雅黑 Microsoft Himalaya Consolas;
     overflow: hidden;
     background: -webkit-linear-gradient(top, rgba(255, 175, 75, 1) 0%, rgba(255, 173, 10, 1) 8%, rgba(255, 146, 10, 1) 52%, rgba(255, 146, 10, 1) 96%, rgba(255, 173, 10, 1) 98%, rgba(255, 146, 10, 1) 100%);
+    z-index: 9999999;
 }
 
 #secKillForm .logo {
@@ -49,23 +50,6 @@
     cursor: pointer;
     font-weight: bolder;
     background-color: #6A6AFF;
-    box-shadow: 1px 1px 1px #888888;
-    border-radius: 4px;
-    float: left;
-}
-
-#secKillForm .submit {
-    margin: 10px 5px;
-    font-size: 16px;
-    color: #27ff09;
-    text-align: center;
-    word-break: break-all;
-    width: 50px;
-    padding: 3px 10px;
-    height: 50%;
-    cursor: pointer;
-    font-weight: bolder;
-    background-color: blueviolet;
     box-shadow: 1px 1px 1px #888888;
     border-radius: 4px;
     float: left;

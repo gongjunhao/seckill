@@ -18,6 +18,13 @@
     "js/utils.js"
     ]
   },
+  "content_scripts": [
+    {
+      "matches": ["http://*/*", "https://*/*"], 
+      "js": ["js/newTask.js"],
+      "css" : ["css/form.css"]
+    }
+  ],
   "browser_action": {
     "default_icon": "images/seckill-16.png",
     "default_title": "秒杀助手",
