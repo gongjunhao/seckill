@@ -15,10 +15,8 @@
   "content_scripts": [
     {
       "matches": ["http://*/*", "https://*/*"], 
-      "js": ["lib/jquery-3.2.1.min.js",
-             "lib/dexie.js",
-             "js/newTask.js"],
-      "css" : ["css/form.css"]
+      "js": ["lib/jquery-3.2.1.min.js", "lib/dexie.js"],
+      "css" : ["css/form.css", "lib/My97DatePicker/skin/WdatePicker.css"]
     }
   ],
   "content_security_policy": "script-src 'self' 'unsafe-eval'; object-src 'self'",
