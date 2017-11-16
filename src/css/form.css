@@ -1,5 +1,5 @@
 #secKillForm {
-    position: absolute;
+    position: fixed;
     bottom: 5px;
     margin: auto;
     width: 98%;
@@ -54,4 +54,8 @@
     box-shadow: 1px 1px 1px #888888;
     border-radius: 4px;
     float: left;
+}
+
+#secKillForm .result {
+    color: red;
 }
