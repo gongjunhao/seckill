@@ -1,8 +1,18 @@
 (function() {
-    $("#close").click(function () {
+    $("#secKillForm #close").click(function () {
         $("#secKillForm").remove();
     });
-    $("#add").click(function () {
+    $("#secKillForm #killTime").click(function () {
+        var picker = new Pikaday({
+            field: document.getElementById('killTime'),
+            format: 'YYYY-MM-DD HH:mm:ss',
+            firstDay: 1,
+            showTime: true,
+            autoClose: false,
+            use24hour: true
+        });
+    });
+    $("#secKillForm #add").click(function () {
         //
         // Define your database
         //
