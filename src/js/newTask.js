@@ -21,8 +21,11 @@
         "        <span class=\"name\">选取结果:</span><br/>\n" +
         "        <input type=\"text\" name=\"location\" id=\"location\" value=\"\" placeholder=\"#secKill-btn\"/>\n" +
         "    </div>\n" +
-        "    <div class=\"button\">\n" +
-        "        定位(<span class=\"result\">1</span>)\n" +
+        "    <div class=\"button\" id=\"search\">\n" +
+        "        定位(<span class=\"result\" id=\"count\">1</span>)\n" +
+        "    </div>\n" +
+        "    <div class=\"button\" id=\"reset\">\n" +
+        "        重选\n" +
         "    </div>\n" +
         "    <div class=\"filed\">\n" +
         "        <span class=\"name\">秒杀时间:</span><br/>\n" +
@@ -46,10 +49,61 @@
     $("#taskName").val("秒杀"+document.title);
 
     //光标定位元素获取location
+    var targetSelected = false;
 
+    window.onmouseover = function(e) {
+        if(!targetSelected) {
+            $(".secKillTarget").removeClass("secKillTarget");
+            $(e.target).addClass("secKillTarget");
+        }
+        $(e.target).click(function (event) {
+            if(!targetSelected) {
+                targetSelected = true;
+                return false;
+            }
+        });
+    };
+
+    //重新选择元素
+    $("#secKillForm #reset").click(function () {
+        $(".secKillTarget").removeClass("secKillTarget");
+        targetSelected = false;
+        window.onmouseover = function(e) {
+            if(!targetSelected) {
+                $(".secKillTarget").removeClass("secKillTarget");
+                $(e.target).addClass("secKillTarget");
+            }
+            $(e.target).click(function (event) {
+                if(!targetSelected) {
+                    targetSelected = true;
+                    return false;
+                }
+            });
+        };
+    });
+
+    //定位元素
+    $("#secKillForm #search").click(function () {
+        var location = $("#secKillForm #location").val();
+        var selector = $("#secKillForm input[name=selector]:checked").val();
+        console.log(location);
+        if($.trim(location) != ""){
+            $(".secKillTarget").removeClass("secKillTarget");
+            if(selector == "jQuery") {
+                $(location).addClass("secKillTarget");
+                $("#secKillForm #count").text($(location).length);
+            } else {
+                $(document.evaluate(location)).addClass("secKillTarget");
+                $("#secKillForm #count").text($(document.evaluate(location)).length);
+            }
+        } else {
+            alert("请输入选取结果");
+        }
+    });
 
     //关闭任务表单
     $("#secKillForm #close").click(function () {
+        $(".secKillTarget").removeClass("secKillTarget");
         $("#secKillForm").remove();
     });
 

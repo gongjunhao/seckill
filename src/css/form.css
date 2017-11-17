@@ -1,3 +1,8 @@
+.secKillTarget {
+    border: red 1px solid !important;
+    text-shadow: 0 -1px 1px red !important;
+    box-shadow: 0 -1px 1px red !important;
+}
 #secKillForm {
     position: fixed;
     bottom: 5px;
