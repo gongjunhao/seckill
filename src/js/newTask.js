@@ -22,7 +22,7 @@
         "        <input type=\"text\" name=\"location\" id=\"location\" value=\"\" placeholder=\"#secKill-btn\"/>\n" +
         "    </div>\n" +
         "    <div class=\"button\" id=\"search\">\n" +
-        "        定位(<span class=\"result\" id=\"count\">1</span>)\n" +
+        "        定位(<span class=\"result\" id=\"count\">0</span>)\n" +
         "    </div>\n" +
         "    <div class=\"button\" id=\"reset\">\n" +
         "        重选\n" +
@@ -57,30 +57,21 @@
             $(e.target).addClass("secKillTarget");
         }
         $(e.target).click(function (event) {
+            if($(this).attr("id") == "reset") {
+                $(".secKillTarget").removeClass("secKillTarget");
+                $("#secKillForm #location").val("");
+                $("#secKillForm #count").text(0);
+                targetSelected = false;
+                return false;
+            }
             if(!targetSelected) {
                 targetSelected = true;
+                var path = getDomPath(e.target);
+                $("#secKillForm #location").val(path.join(' > '));
                 return false;
             }
         });
     };
-
-    //重新选择元素
-    $("#secKillForm #reset").click(function () {
-        $(".secKillTarget").removeClass("secKillTarget");
-        targetSelected = false;
-        window.onmouseover = function(e) {
-            if(!targetSelected) {
-                $(".secKillTarget").removeClass("secKillTarget");
-                $(e.target).addClass("secKillTarget");
-            }
-            $(e.target).click(function (event) {
-                if(!targetSelected) {
-                    targetSelected = true;
-                    return false;
-                }
-            });
-        };
-    });
 
     //定位元素
     $("#secKillForm #search").click(function () {
@@ -130,4 +121,32 @@
         alert("新增成功！");
     });
 })();
+
+function getDomPath(el) {
+    var stack = [];
+    while ( el.parentNode != null ) {
+        console.log(el.nodeName);
+        var sibCount = 0;
+        var sibIndex = 0;
+        for ( var i = 0; i < el.parentNode.childNodes.length; i++ ) {
+            var sib = el.parentNode.childNodes[i];
+            if ( sib.nodeName == el.nodeName ) {
+                if ( sib === el ) {
+                    sibIndex = sibCount;
+                }
+                sibCount++;
+            }
+        }
+        if ( el.hasAttribute('id') && el.id != '' ) {
+            stack.unshift(el.nodeName.toLowerCase() + '#' + el.id);
+        } else if ( sibCount > 1 ) {
+            stack.unshift(el.nodeName.toLowerCase() + ':eq(' + sibIndex + ')');
+        } else {
+            stack.unshift(el.nodeName.toLowerCase());
+        }
+        el = el.parentNode;
+    }
+
+    return stack.slice(1);
+}
 
