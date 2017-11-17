@@ -56,10 +56,16 @@
     //新增任务
     $("#secKillForm #add").click(function () {
         var killTask = {};
+        var location =  $("#secKillForm #location").val();
+        if(location == undefined || $.trim(location) == "") {
+            alert("请设定秒杀按钮选择结果");
+            return false;
+        }
+        killTask.url = window.location.href;
         killTask.id = new Date().getTime();
         killTask.name = $("#secKillForm #taskName").val();
         killTask.selector = $("#secKillForm input[name=selector]:checked").val();
-        killTask.location = $("#secKillForm #location").val();
+        killTask.location = location;
         killTask.killTime = $("#secKillForm #killTime").val();
         killTask.frequency = $("#secKillForm #frequency").val();
         killTask.count = $("#secKillForm #count").val();
