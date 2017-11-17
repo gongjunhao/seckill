@@ -66,8 +66,14 @@
             }
             if(!targetSelected) {
                 targetSelected = true;
-                var path = getDomPath(e.target);
-                $("#secKillForm #location").val(path.join(' > '));
+                var selector = $("#secKillForm input[name=selector]:checked").val();
+                if(selector == "jQuery") {
+                    var path = getDomPath(e.target);
+                    $("#secKillForm #location").val(path.join(' > '));
+                } else {
+                    var path = getXPathTo(e.target);
+                    $("#secKillForm #location").val(path);
+                }
                 return false;
             }
         });
@@ -84,8 +90,8 @@
                 $(location).addClass("secKillTarget");
                 $("#secKillForm #count").text($(location).length);
             } else {
-                $(document.evaluate(location)).addClass("secKillTarget");
-                $("#secKillForm #count").text($(document.evaluate(location)).length);
+                $(getElementsByXPath(location)).addClass("secKillTarget");
+                $("#secKillForm #count").text(getElementsByXPath(location).length);
             }
         } else {
             alert("请输入选取结果");
@@ -148,5 +154,34 @@ function getDomPath(el) {
     }
 
     return stack.slice(1);
+}
+
+
+function getXPathTo(element) {
+    if (element.id!=='')
+        return 'id("'+element.id+'")';
+    if (element===document.body)
+        return element.tagName;
+
+    var ix= 0;
+    var siblings= element.parentNode.childNodes;
+    for (var i= 0; i<siblings.length; i++) {
+        var sibling= siblings[i];
+        if (sibling===element)
+            return getPathTo(element.parentNode)+'/'+element.tagName+'['+(ix+1)+']';
+        if (sibling.nodeType===1 && sibling.tagName===element.tagName)
+            ix++;
+    }
+}
+
+
+function getElementsByXPath(STR_XPATH) {
+    var xresult = document.evaluate(STR_XPATH, document, null, XPathResult.ANY_TYPE, null);
+    var xnodes = [];
+    var xres;
+    while (xres = xresult.iterateNext()) {
+        xnodes.push(xres);
+    }
+    return xnodes;
 }
 
