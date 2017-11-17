@@ -51,6 +51,7 @@
     //光标定位元素获取location
     var targetSelected = false;
 
+    //根据光标定位元素
     window.onmouseover = function(e) {
         if(!targetSelected) {
             $(".secKillTarget").removeClass("secKillTarget");
@@ -74,6 +75,7 @@
                     var path = getXPathTo(e.target);
                     $("#secKillForm #location").val(path);
                 }
+                $("#secKillForm #count").text(1);
                 return false;
             }
         });
@@ -128,6 +130,11 @@
     });
 })();
 
+/**
+ * 根据点击元素 获取Jquery path
+ * @param el
+ * @returns {Array.<*>}
+ */
 function getDomPath(el) {
     var stack = [];
     while ( el.parentNode != null ) {
@@ -156,7 +163,11 @@ function getDomPath(el) {
     return stack.slice(1);
 }
 
-
+/**
+ * 根据点击元素 获取 xPath
+ * @param element
+ * @returns {string}
+ */
 function getXPathTo(element) {
     if (element.id!=='')
         return 'id("'+element.id+'")';
@@ -168,13 +179,17 @@ function getXPathTo(element) {
     for (var i= 0; i<siblings.length; i++) {
         var sibling= siblings[i];
         if (sibling===element)
-            return getPathTo(element.parentNode)+'/'+element.tagName+'['+(ix+1)+']';
+            return getXPathTo(element.parentNode)+'/'+element.tagName+'['+(ix+1)+']';
         if (sibling.nodeType===1 && sibling.tagName===element.tagName)
             ix++;
     }
 }
 
-
+/**
+ * 根据xPath查询节点
+ * @param STR_XPATH
+ * @returns {Array}
+ */
 function getElementsByXPath(STR_XPATH) {
     var xresult = document.evaluate(STR_XPATH, document, null, XPathResult.ANY_TYPE, null);
     var xnodes = [];
