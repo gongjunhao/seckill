@@ -3,12 +3,13 @@ $("#standTime").text(formatDateTime(standerTime));
 $(document).ready(function () {
 
     //标题长度限制
-    var titleLength = 20;
+    var titleLength = 17;
 
     //北京时间接口路径
     var apiUrl = "https://sapi.k780.com/?app=life.time&appkey=10003&sign=b59bc3ef6191eb9f747dd4e83c99f2a4&format=json&jsoncallback=data";
 
     //调用接口获取北京时间
+    var startTime = new Date().getTime();
     $.ajax({
         type          : 'get',
         async         : false,
@@ -26,7 +27,9 @@ $(document).ready(function () {
             for(var i in data.result){
                 var property=data.result[i];
                 if(i == "timestamp") {
-                    standerTime = parseInt((parseInt(property)+0)+"500");
+                    standerTime = parseInt(property+"000");
+                    var diff = (new Date().getTime() - startTime)/2;
+                    standerTime += (diff + 100);
                     updateTime();
                 }
             }
