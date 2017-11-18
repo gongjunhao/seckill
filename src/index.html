@@ -11,25 +11,49 @@
     <span id="addNewTask" class="oprBtn">新增秒杀(+)</span>
     <br/>
     <h2>任务列表</h2>（北京时间：2017-10-18 11:59:50）<br/><br/>
+    <span id="message"></span>
 
-    <div class="taskContainer">
-        <div class="header">
-            <span>秒杀Iphonex</span>
-        </div>
-        <div class="content">
-            <dd>http://www.jd.com/xxx/xx</dd>
-            <dd>jquery</dd>
-            <dd>#secKillBtn</dd>
-            <dd>2017-11-11 12:00:00</dd>
-            <dd>00:01:32</dd>
-            <dd>500ms/次</dd>
-            <dd>10次</dd>
-        </div>
-        <div class="footer">
-            <dd>状态</dd>
-            <dd>启动</dd>
-            <dd>挂起</dd>
-            <dd>删除</dd>
+    <div  id="templateCard">
+        <div class="taskContainer" style="display: none;">
+            <div class="header">
+                <span id="title">秒杀Iphonex</span>
+            </div>
+            <div class="content">
+                <dl>
+                    <dd>URL:</dd>
+                    <dd>http://www.jd.com/xxx/xx</dd>
+                </dl>
+                <dl>
+                    <dd>选择器：</dd>
+                    <dd>jquery</dd>
+                </dl>
+                <dl>
+                    <dd>路径:</dd>
+                    <dd>#secKillBtn</dd>
+                </dl>
+                <dl>
+                    <dd>秒杀时间：</dd>
+                    <dd>2017-11-11 12:00:00</dd>
+                </dl>
+                <dl>
+                    <dd>剩余时间：</dd>
+                    <dd>00:01:32</dd>
+                </dl>
+                <dl>
+                    <dd>秒杀频率：</dd>
+                    <dd>500ms/次</dd>
+                </dl>
+                <dl>
+                    <dd>秒杀次数</dd>
+                    <dd>10次</dd>
+                </dl>
+            </div>
+            <div class="footer">
+                <dd>状态</dd>
+                <dd>启动</dd>
+                <dd>挂起</dd>
+                <dd>删除</dd>
+            </div>
         </div>
     </div>
 </body>

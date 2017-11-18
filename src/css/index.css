@@ -5,6 +5,8 @@ body {
 .oprBtn {
     float: right;
     margin: 2px 10px;
+    cursor: pointer;
+    color: blue;
 }
 .taskContainer {
     width: 100%;
@@ -14,6 +16,7 @@ body {
     box-shadow: 1px 1px 0px #888888;
     border-radius: 5px;
     font-size: 12px;
+    margin: 10px 5px;
 }
 
 .taskContainer .header {
@@ -31,13 +34,23 @@ body {
     color: #e4890c;
     padding: 8px 10px;
     height: 140px;
+    overflow: hidden;
 }
 
-.taskContainer .content dd {
-    width: 100%;
+.taskContainer .content dl {
     float: left;
+    overflow: hidden;
+}
 
-    line-height: 20px;
+.taskContainer .content dl:first-child {
+    width: 20%;
+    float: left;
+}
+
+
+.taskContainer .content dl:last-child {
+    width: 80%;
+    float: left;
 }
 
 
@@ -52,6 +65,7 @@ body {
     height: 100%;
     line-height: 30px;
     font-size: 14px;
-    color: #6A6AFF;
+    color: red;
     float: left;
+    cursor: pointer;
 }
