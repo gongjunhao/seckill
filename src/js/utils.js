@@ -1,5 +1,5 @@
 var standerTime = new Date().getTime();
-console.log(standerTime);
+$("#standTime").text(formatDateTime(standerTime));
 $(document).ready(function () {
 
     //标题长度限制
