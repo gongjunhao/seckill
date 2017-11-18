@@ -1,6 +1,7 @@
 <html>
 <head>
     <meta charset="utf8">
+    <meta http-equiv="Content-Security-Policy" content="default-src *; style-src 'self' http://* 'unsafe-inline'; script-src 'self' http://* 'unsafe-inline' 'unsafe-eval'" />
     <script type="text/javascript" src="lib/jquery-3.2.1.min.js"></script>
     <script type="text/javascript" src="lib/dexie.js"></script>
     <script type="text/javascript" src="js/utils.js"></script>
@@ -10,7 +11,8 @@
     <span id="close" class="oprBtn">关闭(x)</span>
     <span id="addNewTask" class="oprBtn">新增秒杀(+)</span>
     <br/>
-    <h2>任务列表</h2>（北京时间：2017-10-18 11:59:50）<br/><br/>
+    <h2>任务列表</h2><br/>
+    <div class="standerTime">（北京时间：<span id="standTime">2017-10-18 11:59:50</span>）</div>
     <span id="message"></span>
 
     <div  id="templateCard">

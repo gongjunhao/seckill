@@ -19,7 +19,7 @@
       "css" : ["css/form.css"]
     }
   ],
-  "content_security_policy": "script-src 'self' 'unsafe-eval'; object-src 'self'",
+  "content_security_policy": "script-src 'self' 'unsafe-eval' https://sapi.k780.com/; object-src 'self'",
   "browser_action": {
     "default_icon": "image/seckill-16.png",
     "default_title": "秒杀助手",
