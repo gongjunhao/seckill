@@ -4,15 +4,34 @@
     <script type="text/javascript" src="lib/jquery-3.2.1.min.js"></script>
     <script type="text/javascript" src="lib/dexie.js"></script>
     <script type="text/javascript" src="js/utils.js"></script>
+    <link href="css/index.css" rel="stylesheet" type="text/css">
 </head>
 <body>
-    <span id="addNewTask">新增秒杀(+)</span><br/><br/>
-    任务列表（北京时间：2017-10-18 11:59:50）<br/><br/>
-    名称 秒杀时间 剩余时间<br/>
-    ------------------------------------------------------<br/>
-    秒杀热水壶 2017-10-18 12:00:00 00:00:10<br/>
-    秒杀冰箱 2017-10-18 14:00:00 00:03:32<br/>
-    ·······<br/>
+    <span id="close" class="oprBtn">关闭(x)</span>
+    <span id="addNewTask" class="oprBtn">新增秒杀(+)</span>
+    <br/>
+    <h2>任务列表</h2>（北京时间：2017-10-18 11:59:50）<br/><br/>
+
+    <div class="taskContainer">
+        <div class="header">
+            <span>秒杀Iphonex</span>
+        </div>
+        <div class="content">
+            <dd>http://www.jd.com/xxx/xx</dd>
+            <dd>jquery</dd>
+            <dd>#secKillBtn</dd>
+            <dd>2017-11-11 12:00:00</dd>
+            <dd>00:01:32</dd>
+            <dd>500ms/次</dd>
+            <dd>10次</dd>
+        </div>
+        <div class="footer">
+            <dd>状态</dd>
+            <dd>启动</dd>
+            <dd>挂起</dd>
+            <dd>删除</dd>
+        </div>
+    </div>
 </body>
 
 </html>

@@ -43,7 +43,9 @@
         "    <div class=\"button\" id=\"close\"> 关闭 </div>\n" +
         "</div>";
     newElement.innerHTML = html;
-    document.getElementsByTagName("body")[0].appendChild(newElement);
+    if($("#secKillForm").length === 0) {
+        document.getElementsByTagName("body")[0].appendChild(newElement);
+    }
 
     //设置秒杀名称
     $("#taskName").val("秒杀"+document.title);
