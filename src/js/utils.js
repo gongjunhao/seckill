@@ -5,11 +5,14 @@ $(document).ready(function () {
     //标题长度限制
     var titleLength = 20;
 
+    //北京时间接口路径
+    var apiUrl = "https://sapi.k780.com/?app=life.time&appkey=10003&sign=b59bc3ef6191eb9f747dd4e83c99f2a4&format=json&jsoncallback=data";
+
     //调用接口获取北京时间
     $.ajax({
         type          : 'get',
         async         : false,
-        url           : 'https://sapi.k780.com/?app=life.time&appkey=29705&sign=935228281845e8be2ec7481f13e9beee&format=json&jsoncallback=data',
+        url           : apiUrl,
         dataType      : 'jsonp',
         jsonp         : 'callback',
         jsonpCallback : 'data',
