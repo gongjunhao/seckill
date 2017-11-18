@@ -29,7 +29,7 @@ $(document).ready(function () {
                 if(i == "timestamp") {
                     standerTime = parseInt(property+"000");
                     var diff = (new Date().getTime() - startTime)/2;
-                    standerTime += (diff + 100);
+                    standerTime += (diff + 500);
                     updateTime();
                 }
             }
