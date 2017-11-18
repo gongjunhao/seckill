@@ -22,7 +22,7 @@
         "        <input type=\"text\" name=\"location\" id=\"location\" value=\"\" placeholder=\"#secKill-btn\"/>\n" +
         "    </div>\n" +
         "    <div class=\"button\" id=\"search\">\n" +
-        "        定位(<span class=\"result\" id=\"count\">0</span>)\n" +
+        "        定位(<span class=\"result\" id=\"result\">0</span>)\n" +
         "    </div>\n" +
         "    <div class=\"button\" id=\"reset\">\n" +
         "        重选\n" +
@@ -61,7 +61,7 @@
             if($(this).attr("id") == "reset") {
                 $(".secKillTarget").removeClass("secKillTarget");
                 $("#secKillForm #location").val("");
-                $("#secKillForm #count").text(0);
+                $("#secKillForm #result").text(0);
                 targetSelected = false;
                 return false;
             }
@@ -75,7 +75,7 @@
                     var path = getXPathTo(e.target);
                     $("#secKillForm #location").val(path);
                 }
-                $("#secKillForm #count").text(1);
+                $("#secKillForm #result").text(1);
                 return false;
             }
         });
@@ -90,10 +90,10 @@
             $(".secKillTarget").removeClass("secKillTarget");
             if(selector == "jQuery") {
                 $(location).addClass("secKillTarget");
-                $("#secKillForm #count").text($(location).length);
+                $("#secKillForm #result").text($(location).length);
             } else {
                 $(getElementsByXPath(location)).addClass("secKillTarget");
-                $("#secKillForm #count").text(getElementsByXPath(location).length);
+                $("#secKillForm #result").text(getElementsByXPath(location).length);
             }
         } else {
             alert("请输入选取结果");
@@ -123,10 +123,15 @@
         killTask.frequency = $("#secKillForm #frequency").val();
         killTask.count = $("#secKillForm #count").val();
         killTask.status = 0;
-        var db = new Dexie("secKill");
-        db.version(1).stores({ task: 'id,name,url,selector,location,killTime,frequency,count,status'});
-        db.task.put(killTask);
-        alert("新增成功！");
+        chrome.storage.local.get({"tasks": new Array()}, function(value){
+            var tasks = value.tasks;
+            tasks.push(killTask);
+            chrome.storage.local.set({"tasks": value.tasks}, function() {
+                $(".secKillTarget").removeClass("secKillTarget");
+                $("#secKillForm").remove();
+                alert("新增成功！");
+            });
+        });
     });
 })();
 
@@ -138,7 +143,6 @@
 function getDomPath(el) {
     var stack = [];
     while ( el.parentNode != null ) {
-        console.log(el.nodeName);
         var sibCount = 0;
         var sibIndex = 0;
         for ( var i = 0; i < el.parentNode.childNodes.length; i++ ) {

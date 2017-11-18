@@ -5,5 +5,7 @@ $(document).ready(function () {
             chrome.tabs.executeScript(tabs[0].id, { file: 'js/newTask.js'});
         });
     });
-    //window.close();
+    chrome.storage.local.get({"tasks": new Array()}, function(value){
+        console.log(value.tasks);
+    });
 });
