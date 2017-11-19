@@ -1,3 +1,4 @@
+*{margin:0;padding:0;}
 body {
     width: 300px;
     height: 100%;
@@ -5,10 +6,12 @@ body {
 #message {
     padding: 2px 8px;
     color: red;
+    font-size:12px;
 }
 .standerTime {
     width: 100%;
     height: 30px;
+    line-height: 30px;
     overflow: hidden;
 }
 .oprBtn {
@@ -17,18 +20,19 @@ body {
     cursor: pointer;
     color: blue;
 }
+
 .taskContainer {
-    width: 100%;
+    width: 98%;
     height: auto;
     background-color: darkgrey;
     font-family: "微软雅黑 Microsoft Himalaya Consolas";
-    box-shadow: 1px 1px 0px #888888;
+    box-shadow: 1px 1px 0px #bbb8b8;
     border-radius: 5px;
     font-size: 12px;
     margin: 10px 5px;
 }
 
-.taskContainer .header {
+.header {
     font-size: 16px;
     background-color: forestgreen;
     color: white;
@@ -36,9 +40,11 @@ body {
     line-height: 30px;
     padding: 0px 6px;
     font-weight: bolder;
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
 }
 
-.taskContainer .content {
+.content {
     background-color: lightgray;
     color: #e4890c;
     padding: 8px 10px;
@@ -46,33 +52,27 @@ body {
     overflow: hidden;
 }
 
-.taskContainer .content dl {
-    float: left;
-    overflow: hidden;
+.list{
+    line-height: 24px;
+    margin-left:5px;
 }
 
-.taskContainer .content dl:first-child {
-    width: 20%;
-    float: left;
+.list span{
+    margin-left:5px;
 }
-
-
-.taskContainer .content dl:last-child {
-    width: 80%;
-    float: left;
-}
-
-
-.taskContainer .footer {
+.footer {
     width: 100%;
-    height: 30px;
+    height: 40px;
+    line-height: 40px;
     font-weight: bolder;
 }
+.footer ul{
+    margin:0 15px;
+}
+.footer li {
+    list-style: none;
+    width: 25%;
 
-.taskContainer .footer dd {
-    width: 10%;
-    height: 100%;
-    line-height: 30px;
     font-size: 14px;
     color: red;
     float: left;
