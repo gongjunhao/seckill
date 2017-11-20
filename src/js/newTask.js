@@ -29,7 +29,7 @@
         "    </div>\n" +
         "    <div class=\"filed\">\n" +
         "        <span class=\"name\">秒杀时间:</span><br/>\n" +
-        "        <input type=datetime-local value=\"2017-11-11T12:00:00\" step=\"1\" id=\"killTime\" name=\"killTime\">\n" +
+        "        <input type=datetime-local value=\""+formatDateTime(new Date().getTime())+"T12:00:00\" step=\"1\" id=\"killTime\" name=\"killTime\">\n" +
         "    </div>\n" +
         "    <div class=\"filed\">\n" +
         "        <span class=\"name\">秒杀频率(ms):</span><br/>\n" +
@@ -205,5 +205,21 @@ function getElementsByXPath(STR_XPATH) {
         xnodes.push(xres);
     }
     return xnodes;
+}
+
+
+/**
+ * 日期格式化
+ * @param inputTime
+ * @returns {string}
+ */
+function formatDateTime(inputTime) {
+    var date = new Date(inputTime);
+    var y = date.getFullYear();
+    var m = date.getMonth() + 1;
+    m = m < 10 ? ('0' + m) : m;
+    var d = date.getDate();
+    d = d < 10 ? ('0' + d) : d;
+    return y + '-' + m + '-' + d;
 }
 

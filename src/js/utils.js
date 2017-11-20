@@ -78,9 +78,14 @@ $(document).ready(function () {
                 $(card).find("span[datafld='location']").text(tasks[i].location.length > urlLength? tasks[i].location.substr(0, urlLength)+"..." : tasks[i].location);
                 $(card).find("span[datafld='location']").attr("title", tasks[i].location);
                 $(card).find("span[datafld='killTime']").text(tasks[i].killTime.replace("T", " "));
+                $(card).find("span[datafld='leftTime']").text(getLeftTime(new Date(tasks[i].killTime).getTime() - standerTime));
+                $(card).find("span[datafld='leftTime']").attr("killTime", new Date(tasks[i].killTime).getTime());
                 $(card).find("span[datafld='frequency']").text(tasks[i].frequency+"ms/次");
                 $(card).find("span[datafld='count']").text(tasks[i].count+"次");
                 $(card).find(".footer ul").attr("id", tasks[i].id);
+                if(new Date(tasks[i].killTime).getTime() - standerTime <= 0) {
+                    tasks[i].status  = 2; //已过期
+                }
                 var statusText = "运行中";
                 switch (tasks[i].status) {
                     case 0:
@@ -90,6 +95,10 @@ $(document).ready(function () {
                     case 1:
                         statusText = "已暂停";
                         $(card).find("li[datatype='status']").css("color","yellow");
+                        break;
+                    case 2:
+                        statusText = "已过期";
+                        $(card).find("li[datatype='status']").css("color","red");
                         break;
                 }
                 $(card).find("li[datatype='status']").text(statusText);
@@ -112,6 +121,7 @@ $(document).ready(function () {
         //启动
         if($(this).index() == 1 && currentTask.status == 1) {
             currentTask.status = 0;
+            $(this).siblings(":first").text("运行中");
             $(this).siblings(":first").css("color","green");
             var opt = { type: "basic", title: "秒杀助手提醒", message: currentTask.name + "\n秒杀任务已启动！", iconUrl: "image/runing.png"};
             chrome.notifications.create(dialogId+++"", opt);
@@ -120,6 +130,7 @@ $(document).ready(function () {
         //挂起
         if($(this).index() == 2 && currentTask.status == 0) {
             currentTask.status = 1;
+            $(this).siblings(":first").text("已暂停");
             $(this).siblings(":first").css("color","yellow");
             var opt = { type: "basic", title: "秒杀助手提醒", message:  currentTask.name + "\n秒杀任务已暂停！", iconUrl: "image/pause.png" };
             chrome.notifications.create(dialogId+++"", opt);
@@ -147,7 +158,22 @@ function updateTime() {
     setInterval(function () {
         standerTime += 1000;
         $("#standTime").text(formatDateTime(standerTime));
+        $("span[datafld='leftTime']").each(function () {
+            $(this).text(getLeftTime(parseInt($(this).attr("killTime"))-standerTime+1000));
+        });
     }, 1000);
+}
+
+
+function getLeftTime(leftTime) {
+    if(leftTime <= 0) {
+        return "00:00:00";
+    } else {
+        var date = new Date(null);
+        date.setMilliseconds(leftTime)
+        var result = date.toISOString().substr(11, 8);
+        return result;
+    }
 }
 
 /**
