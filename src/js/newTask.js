@@ -132,6 +132,7 @@
                 $(".secKillTarget").removeClass("secKillTarget");
                 $("#secKillForm").remove();
                 alert("新增成功！");
+                //chrome.extension.sendRequest({msg: "成功添加秒杀任务！"});
             });
         });
     });

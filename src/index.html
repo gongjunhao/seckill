@@ -17,24 +17,23 @@
     <div  id="templateCard">
         <div class="taskContainer" style="display: none;">
             <div class="header">
-                <span id="title">秒杀Iphonex</span>
+                <span datafld="name">秒杀Iphonex </span>
             </div>
             <div class="content">
-                <div class="list">URL：<span>http://www.jd.com/xxx/xx</span></div>
-                <div class="list">选择器：<span>jquery</span></div>
-                <div class="list">路径：<span>#secKillBtn</span></div>
-                <div class="list">秒杀时间：<span>2017-11-11 12:00:00</span></div>
-                <div class="list">剩余时间：<span>00:01:32</span></div>
-                <div class="list">秒杀频率：<span>500ms/次</span></div>
-                <div class="list">秒杀次数<span>10次</span></div>
-
+                <div class="list">URL：<span datafld="url">http://www.jd.com/xxx/xx</span></div>
+                <div class="list">选择器：<span datafld="selector">jquery</span></div>
+                <div class="list">路径：<span datafld="location">#secKillBtn</span></div>
+                <div class="list">秒杀时间：<span datafld="killTime">2017-11-11 12:00:00</span></div>
+                <div class="list">剩余时间：<span datafld="leftTime">00:01:32</span></div>
+                <div class="list">秒杀频率：<span datafld="frequency">500ms/次</span></div>
+                <div class="list">秒杀次数<span datafld="count">10次</span></div>
             </div>
 
             <div class="footer">
-                <ul>
-                    <li>状态</li>
+                <ul id="">
+                    <li datatype="status">状态</li>
                     <li>启动</li>
-                    <li>挂起</li>
+                    <li>暂停</li>
                     <li>删除</li>
                 </ul>
             </div>

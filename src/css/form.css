@@ -16,7 +16,7 @@
     font-family: 微软雅黑 Microsoft Himalaya Consolas;
     overflow: hidden;
     background: -webkit-linear-gradient(top, rgba(255, 175, 75, 1) 0%, rgba(255, 173, 10, 1) 8%, rgba(255, 146, 10, 1) 52%, rgba(255, 146, 10, 1) 96%, rgba(255, 173, 10, 1) 98%, rgba(255, 146, 10, 1) 100%);
-    z-index: 9999999;
+    z-index: 2147483649;
     box-sizing:unset;
 }
 

@@ -1,9 +1,16 @@
 var standerTime = new Date().getTime();
 $("#standTime").text(formatDateTime(standerTime));
+var dialogId = 0;
 $(document).ready(function () {
 
     //标题长度限制
     var titleLength = 17;
+
+    //url长度
+    var urlLength = 25;
+
+    //任务列表
+    var tasks = new Array();
 
     //北京时间接口路径
     var apiUrl = "https://sapi.k780.com/?app=life.time&appkey=10003&sign=b59bc3ef6191eb9f747dd4e83c99f2a4&format=json&jsoncallback=data";
@@ -55,7 +62,7 @@ $(document).ready(function () {
 
     //加载任务列表数据
     chrome.storage.local.get({"tasks": new Array()}, function(value){
-        var tasks = value.tasks;
+        tasks = value.tasks;
         console.log(tasks);
         if(tasks.length > 0) {
             for(var i=0; i<tasks.length; i++) {
@@ -63,7 +70,29 @@ $(document).ready(function () {
                 $(card).find(".taskContainer").removeAttr("id");
                 $(card).find(".taskContainer").css("display","block");
                 //重置标题
-                $(card).find("#title").text(tasks[i].name.length > titleLength? tasks[i].name.substr(0, titleLength)+"..." : tasks[i].name);
+                $(card).find("span[datafld='name']").text(tasks[i].name.length > titleLength? tasks[i].name.substr(0, titleLength)+"..." : tasks[i].name);
+                $(card).find("span[datafld='name']").attr("title", tasks[i].name);
+                $(card).find("span[datafld='url']").text(tasks[i].url.length > urlLength? tasks[i].url.substr(0, urlLength)+"..." : tasks[i].url);
+                $(card).find("span[datafld='url']").attr("title", tasks[i].url);
+                $(card).find("span[datafld='selector']").text(tasks[i].selector);
+                $(card).find("span[datafld='location']").text(tasks[i].location.length > urlLength? tasks[i].location.substr(0, urlLength)+"..." : tasks[i].location);
+                $(card).find("span[datafld='location']").attr("title", tasks[i].location);
+                $(card).find("span[datafld='killTime']").text(tasks[i].killTime.replace("T", " "));
+                $(card).find("span[datafld='frequency']").text(tasks[i].frequency+"ms/次");
+                $(card).find("span[datafld='count']").text(tasks[i].count+"次");
+                $(card).find(".footer ul").attr("id", tasks[i].id);
+                var statusText = "运行中";
+                switch (tasks[i].status) {
+                    case 0:
+                        statusText = "运行中";
+                        $(card).find("li[datatype='status']").css("color","green");
+                        break;
+                    case 1:
+                        statusText = "已暂停";
+                        $(card).find("li[datatype='status']").css("color","yellow");
+                        break;
+                }
+                $(card).find("li[datatype='status']").text(statusText);
                 $("#message").after($(card).html());
             }
         } else {
@@ -72,10 +101,40 @@ $(document).ready(function () {
     });
 
     //任务列表数据操作
-    //启动
-    //挂起
-    //删除
-    //更新状态
+    $(document).delegate(".footer ul li", "click", function(){
+        var currentTask = null;
+        for(var i=0; i<tasks.length; i++) {
+            if(tasks[i].id == $(this).parent().attr("id")) {
+                currentTask = tasks[i];
+                break;
+            }
+        }
+        //启动
+        if($(this).index() == 1 && currentTask.status == 1) {
+            currentTask.status = 0;
+            $(this).siblings(":first").css("color","green");
+            var opt = { type: "basic", title: "秒杀助手提醒", message: currentTask.name + "\n秒杀任务已启动！", iconUrl: "image/runing.png"};
+            chrome.notifications.create(dialogId+++"", opt);
+        }
+
+        //挂起
+        if($(this).index() == 2 && currentTask.status == 0) {
+            currentTask.status = 1;
+            $(this).siblings(":first").css("color","yellow");
+            var opt = { type: "basic", title: "秒杀助手提醒", message:  currentTask.name + "\n秒杀任务已暂停！", iconUrl: "image/pause.png" };
+            chrome.notifications.create(dialogId+++"", opt);
+        }
+
+        //删除
+        if($(this).index() == 3) {
+            tasks.splice($.inArray(currentTask, tasks), 1);
+            $(this).parent().parent().parent().remove();
+            var opt = { type: "basic", title: "秒杀助手提醒", message:  currentTask.name + "\n秒杀任务删除成功！", iconUrl: "image/delete.png" };
+            chrome.notifications.create(dialogId+++"", opt);
+        }
+        //更新任务列表
+        chrome.storage.local.set({"tasks": tasks});
+    });
 
 
 
