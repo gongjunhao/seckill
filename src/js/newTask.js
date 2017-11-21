@@ -33,7 +33,7 @@
         "    </div>\n" +
         "    <div class=\"filed\">\n" +
         "        <span class=\"name\">秒杀频率(ms):</span><br/>\n" +
-        "        <input type=\"number\" name=\"frequency\"  id=\"frequency\"value=\"500\" placeholder=\"单位：毫秒（ms）\"/>\n" +
+        "        <input type=\"number\" name=\"frequency\"  id=\"frequency\"value=\"500\" min=\"400\" placeholder=\"单位：毫秒（ms）\"/>\n" +
         "    </div>\n" +
         "    <div class=\"filed\">\n" +
         "        <span class=\"name\">秒杀次数:</span><br/>\n" +
