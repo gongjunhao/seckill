@@ -7,7 +7,7 @@ var dialogId = 0;
 var tasks = null;
 
 //检查准备工作URL自动打开（账号登录 商品规格选择 手工）
-var tickTime = 30000;   //120000
+var tickTime = 120000;   //120000 2分钟
 
 //北京时间接口路径
 var apiUrl = "https://sapi.k780.com/?app=life.time&appkey=10003&sign=b59bc3ef6191eb9f747dd4e83c99f2a4&format=json&jsoncallback=data";
