@@ -53,36 +53,49 @@ function processTask(isServerTime) {
     }
     setInterval(function () {
         standerTime += 500;
-        console.log(formatDateTime(standerTime) + "===========" +formatDateTime(new Date().getTime()));
+        //console.log(formatDateTime(standerTime));
         chrome.storage.local.get({"tasks": new Array()}, function(value) {
             tasks = value.tasks;
             if(tasks != undefined && tasks.length > 0) {
                 for(var i=0; i<tasks.length; i++) {
+
                     if(tasks[i].status == 0) {
-                        if((new Date(tasks[i].killTime) - standerTime) > tickTime && (new Date(tasks[i].killTime) - standerTime) < (tickTime+600)){
+                        if((new Date(tasks[i].killTime) - standerTime) >= tickTime && (new Date(tasks[i].killTime) - standerTime) <= (tickTime+600)){
+                            console.log(formatDateTime(new Date(tasks[i].killTime).getTime()));
+                            var task = tasks[i];
                             //秒杀开始提醒（检查是否打开相关标签页）没有提示打开
-                            var opt = null;
-                            chrome.tabs.query({url: tasks[i].url}, function(results) {
+                            chrome.tabs.query({url: task.url}, function(results) {
                                 if (results.length == 0) {
-                                    chrome.notifications.create("openLinkNotify-"+tasks[i].id, {
+                                    chrome.notifications.create("openLinkNotify-"+task.id, {
                                         type:    "basic",
                                         iconUrl: "image/link.png",
                                         title:   "秒杀助手提醒",
-                                        message: tasks[i].name + "\n任务将在2分钟后开始，抢购页面尚未打开，是否前往相关页面！",
+                                        message: task.name + "\n任务将在2分钟后开始，抢购页面尚未打开，是否前往相关页面！",
                                         buttons: [{ title: "打开抢购页面" }, { title: "忽略" }]
                                     });
                                 } else {
-                                    chrome.notifications.create("activeTabNotify-"+tasks[i].id, {
-                                        type:    "basic",
-                                        iconUrl: "image/bell.png",
-                                        title:   "秒杀助手提醒",
-                                        message: tasks[i].name + "\n秒杀任务2分钟后开始，请手动检查登录及商品规格选择验证码等！",
-                                        buttons: [{ title: "切换Tab抢购页面" }, { title: "忽略" }]
-                                    });
+                                    var noActive = true;
+                                    for(var j=0; j<results.length; j++){
+                                        if(results[j].active){
+                                            noActive = false;
+                                        }
+                                    }
+                                    if(noActive){   //已经打开但是未激活
+                                        chrome.notifications.create("activeTabNotify-"+task.id, {
+                                            type:    "basic",
+                                            iconUrl: "image/bell.png",
+                                            title:   "秒杀助手提醒",
+                                            message: task.name + "\n将在2分钟后开始，请检查登录及商品规格选择验证码等！",
+                                            buttons: [{ title: "切换Tab抢购页面" }, { title: "忽略" }]
+                                        });
+                                    } else {    //已经打开且激活
+                                        var opt = { type: "basic", title: "秒杀助手提醒", message: task.name + "\n将在2分钟后开始，请检查登录及商品规格选择验证码等！", iconUrl: "image/bell.png"};
+                                        chrome.notifications.create(dialogId+++"", opt);
+                                    }
                                 }
                             });
                         }
-                        if((new Date(tasks[i].killTime) - standerTime) >0 && (new Date(tasks[i].killTime) - standerTime) < 600){
+                        if((new Date(tasks[i].killTime) - standerTime) >= 0 && (new Date(tasks[i].killTime) - standerTime) <= 600){
                             //异步执行点击事件
                             var opt = { type: "basic", title: "秒杀助手提醒", message: tasks[i].name + "\n秒杀任务完成！", iconUrl: "image/bell.png"};
                             chrome.notifications.create(dialogId+++"", opt);
@@ -102,10 +115,11 @@ chrome.notifications.onButtonClicked.addListener(function(notifId, btnIdx) {
             for(var i=0; i<tasks.length; i++) {
                 if(taskId == tasks[i].id) {
                     chrome.tabs.create({url: tasks[i].url});
+                    chrome.notifications.clear(notifId);
                 }
             }
         } else if (btnIdx === 1) {
-            chrome.notifications.clear("openLinkNotify", function(){
+            chrome.notifications.clear(notifId, function(){
                 console.log("忽略本次秒杀！");
             })
         }
@@ -116,15 +130,17 @@ chrome.notifications.onButtonClicked.addListener(function(notifId, btnIdx) {
             for(var i=0; i<tasks.length; i++) {
                 if(taskId == tasks[i].id) {
                     chrome.tabs.query({url: tasks[i].url}, function(results) {
-                        chrome.tabs.update(results.id, {"active":true}, function(){
+                        chrome.tabs.update(results[0].id, {"active":true}, function(){
                             console.log("抢购页面被激活！");
                         });
+                        chrome.notifications.clear(notifId);
                     });
                 }
             }
         } else if (btnIdx === 1) {
             chrome.notifications.clear("openLinkNotify", function(){
                 console.log("抢购页面未被激活！");
+                chrome.notifications.clear(notifId);
             })
         }
     }
