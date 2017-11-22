@@ -3,44 +3,44 @@
     //页面注入任务表单
     var newElement = document.createElement('div');
     var html = "<div id=\"secKillForm\">\n" +
-        "    <div class=\"logo\">\n" +
+        "    <div class=\"secKill-logo\">\n" +
         "        新增秒杀\n" +
         "    </div>\n" +
-        "    <div class=\"filed\">\n" +
-        "        <span class=\"name\">秒杀商品:</span><br/>\n" +
-        "        <input type=\"text\" name=\"taskName\" value=\"\" id=\"taskName\" placeholder=\"请输入商品名称\" />\n" +
+        "    <div class=\"secKill-filed\">\n" +
+        "        <span class=\"secKill-name\">秒杀商品:</span><br/>\n" +
+        "        <input type=\"text\" name=\"taskName\" class=\"secKill-input-text\" value=\"\" id=\"taskName\" placeholder=\"请输入商品名称\" />\n" +
         "    </div>\n" +
-        "    <div class=\"filed\">\n" +
-        "        <span class=\"name\">选择器:</span><br/>\n" +
+        "    <div class=\"secKill-filed\">\n" +
+        "        <span class=\"secKill-name\">选择器:</span><br/>\n" +
         "        <input type=\"radio\" name=\"selector\" id=\"rb1\" value=\"jQuery\" checked=\"checked\"/>\n" +
         "        <label for=\"rb1\">jQuery</label>\n" +
         "        <input type=\"radio\" name=\"selector\" id=\"rb2\" value=\"xPath\"/>\n" +
         "        <label for=\"rb2\">xPath</label>\n" +
         "    </div>\n" +
-        "    <div class=\"filed\">\n" +
-        "        <span class=\"name\">选取结果:</span><br/>\n" +
-        "        <input type=\"text\" name=\"location\" id=\"location\" value=\"\" placeholder=\"#secKill-btn\"/>\n" +
+        "    <div class=\"secKill-filed\">\n" +
+        "        <span class=\"secKill-name\">选取结果:</span><br/>\n" +
+        "        <input type=\"text\" name=\"location\" class=\"secKill-input-text\" id=\"location\" value=\"\" placeholder=\"#secKill-btn\"/>\n" +
         "    </div>\n" +
-        "    <div class=\"button\" id=\"search\">\n" +
-        "        定位(<span class=\"result\" id=\"result\">0</span>)\n" +
+        "    <div class=\"secKill-button\" style=\"width: 50px;\" id=\"search\">\n" +
+        "        定位(<span class=\"secKill-result\" id=\"result\">0</span>)\n" +
         "    </div>\n" +
-        "    <div class=\"button\" id=\"reset\">\n" +
+        "    <div class=\"secKill-button\" id=\"reset\">\n" +
         "        重选\n" +
         "    </div>\n" +
-        "    <div class=\"filed\">\n" +
-        "        <span class=\"name\">秒杀时间:</span><br/>\n" +
-        "        <input type=datetime-local value=\""+formatDateTime(new Date().getTime())+"T12:00:00\" step=\"1\" id=\"killTime\" name=\"killTime\">\n" +
+        "    <div class=\"secKill-filed\">\n" +
+        "        <span class=\"secKill-name\">秒杀时间:</span><br/>\n" +
+        "        <input type=\"datetime-local\"  class=\"secKill-input-text\" value=\""+formatDateTime(new Date().getTime())+"T12:00:00\" step=\"1\" id=\"killTime\" name=\"killTime\">\n" +
         "    </div>\n" +
-        "    <div class=\"filed\">\n" +
-        "        <span class=\"name\">秒杀频率(ms):</span><br/>\n" +
-        "        <input type=\"number\" name=\"frequency\"  id=\"frequency\"value=\"500\" min=\"400\" placeholder=\"单位：毫秒（ms）\"/>\n" +
+        "    <div class=\"secKill-filed\">\n" +
+        "        <span class=\"secKill-name\">秒杀频率(ms):</span><br/>\n" +
+        "        <input type=\"number\" name=\"frequency\"  class=\"secKill-input-number\"  id=\"frequency\"value=\"500\" min=\"100\" placeholder=\"单位：毫秒（ms）\"/>\n" +
         "    </div>\n" +
-        "    <div class=\"filed\">\n" +
-        "        <span class=\"name\">秒杀次数:</span><br/>\n" +
-        "        <input type=\"number\" name=\"count\" id=\"count\" value=\"10\" placeholder=\"尝试次数\"/>\n" +
+        "    <div class=\"secKill-filed\">\n" +
+        "        <span class=\"secKill-name\">秒杀次数:</span><br/>\n" +
+        "        <input type=\"number\" name=\"count\" class=\"secKill-input-number\" id=\"count\" value=\"10\" placeholder=\"尝试次数\"/>\n" +
         "    </div>\n" +
-        "    <div class=\"button\" id=\"add\"> 新增 </div>\n" +
-        "    <div class=\"button\" id=\"close\"> 关闭 </div>\n" +
+        "    <div class=\"secKill-button\" id=\"add\"> 新增 </div>\n" +
+        "    <div class=\"secKill-button\" id=\"close\"> 关闭 </div>\n" +
         "</div>";
     newElement.innerHTML = html;
     if($("#secKillForm").length === 0) {
@@ -123,7 +123,15 @@
         killTask.location = location;
         killTask.killTime = $("#secKillForm #killTime").val();
         killTask.frequency = $("#secKillForm #frequency").val();
+        if($("#secKillForm #frequency").val() < 100) {
+            alert("秒杀频率最小值：100");
+            return false;
+        }
         killTask.count = $("#secKillForm #count").val();
+        if($("#secKillForm #count").val() < 1){
+            alert("秒杀次数最小值：1");
+            return false;
+        }
         killTask.status = 0;
         chrome.storage.local.get({"tasks": new Array()}, function(value){
             var tasks = value.tasks;

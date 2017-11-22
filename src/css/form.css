@@ -1,7 +1,7 @@
 .secKillTarget {
-    border: red 1px solid !important;
-    text-shadow: 0 -1px 1px red !important;
-    box-shadow: 0 -1px 1px red !important;
+    text-shadow: 2px 2px 2px rgba(255, 173, 10, 1) !important;
+    box-shadow: 2px 2px 2px rgba(255, 173, 10, 1) !important;
+    cursor: copy !important;
 }
 #secKillForm {
     position: fixed;
@@ -20,7 +20,43 @@
     box-sizing:unset;
 }
 
-#secKillForm .logo {
+#secKillForm .secKill-input-text {
+    display:block;
+    width: 180px;
+    height: 17px;
+    padding:  0px;
+    background: rgba(255,255,255,1);
+    border: none;
+    outline: none;
+    color: black;
+    border: 1px solid rgba(0,0,0,0.3);
+    border-radius: 4px;
+    box-shadow: inset 0 -1px 2px rgba(100,100,100,0.2), 0 1px  1px rgba(255,255,255,0.2);
+    text-indent: 4px;
+    transition: all .3s ease-in-out;
+    position: relative;
+    font-size: 12px;
+}
+
+#secKillForm .secKill-input-number {
+    display:block;
+    width: 80px;
+    height: 17px;
+    padding:  0px;
+    background: rgba(255,255,255,1);
+    border: none;
+    outline: none;
+    color: black;
+    border: 1px solid rgba(0,0,0,0.3);
+    border-radius: 4px;
+    box-shadow: inset 0 -2px 2px rgba(100,100,100,0.2), 0 1px  1px rgba(255,255,255,0.2);
+    text-indent: 4px;
+    transition: all .3s ease-in-out;
+    position: relative;
+    font-size: 12px;
+}
+
+#secKillForm .secKill-logo {
     font-size: 14px;
     color: #ff803b;
     word-break: break-all;
@@ -33,25 +69,25 @@
     float: left;
 }
 
-#secKillForm .filed {
+#secKillForm .secKill-filed {
     color: #fff;
     float: left;
     padding: 3px 10px;
 }
 
-#secKillForm .name {
+#secKillForm .secKill-name {
     color: black;
     font-weight: bolder;
 }
 
-#secKillForm .button {
+#secKillForm .secKill-button {
     margin: 10px 5px;
     font-size: 14px;
     color: #27ff09;
     text-align: center;
     word-break: break-all;
-    width: 50px;
-    padding: 3px 10px;
+    width: 45px;
+    padding: 3px 8px;
     height: 50%;
     cursor: pointer;
     font-weight: bolder;
@@ -61,6 +97,6 @@
     float: left;
 }
 
-#secKillForm .result {
+#secKillForm .secKill-result {
     color: red;
 }
