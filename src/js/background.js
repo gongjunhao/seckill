@@ -97,8 +97,23 @@ function processTask(isServerTime) {
                         }
                         if((new Date(tasks[i].killTime) - standerTime) >= 0 && (new Date(tasks[i].killTime) - standerTime) <= 600){
                             //异步执行点击事件
-                            var opt = { type: "basic", title: "秒杀助手提醒", message: tasks[i].name + "\n秒杀任务完成！", iconUrl: "image/bell.png"};
-                            chrome.notifications.create(dialogId+++"", opt);
+                            var task = tasks[i];
+                            var tabId = null;
+                            chrome.tabs.query({url: task.url}, function(results) {
+                                if (results.length > 0) {
+                                    for(var j=0; j<results.length; j++){
+                                        if(results[j].active){
+                                            tabId = results[j].id;
+                                        }
+                                    }
+                                    if(tabId == null) {
+                                        tabId = results[0].id;
+                                    }
+                                }
+                                chrome.tabs.executeScript(tabId, { code: "secKill("+task.id+");"});
+                                var opt = { type: "basic", title: "秒杀助手提醒", message: task.name + "\n秒杀任务完成！", iconUrl: "image/bell.png"};
+                                chrome.notifications.create(dialogId+++"", opt);
+                            });
                         }
                     }
                 }

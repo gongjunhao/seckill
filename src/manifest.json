@@ -18,7 +18,7 @@
   "content_scripts": [
     {
       "matches": ["http://*/*", "https://*/*"], 
-      "js": ["lib/jquery-3.2.1.min.js", "lib/dexie.js"],
+      "js": ["lib/jquery-3.2.1.min.js", "js/secKill.js"],
       "css" : ["css/form.css"]
     }
   ],
