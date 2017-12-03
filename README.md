@@ -19,6 +19,9 @@ Chrome浏览器 抢购、秒杀插件（秒杀助手） 可自定义 秒杀辅�
 * 拖拽*.crx包至此扩展页面释放，确认安装即可
 * 详细操作步骤，参考：http://www.jianshu.com/p/12ca04c61fc6
 
+#### 使用
+![usage](https://github.com/gongjunhao/seckill/blob/master/doc/usage.gif)
+
 #### Chrome WebStore
 
 * 后续发布至市场
