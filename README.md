@@ -36,7 +36,7 @@ Chrome浏览器 抢购、秒杀插件（秒杀助手） 可自定义 秒杀辅�
 - Pics  http://www.easyicon.net/iconsearch/iconset:bollhavet-icons/1/
 
 
-### 后续功能
+### 后续功能(if stared >= 100)
 * 支持cron定时执行（辅助登录并签到，刷积分）
 
 
