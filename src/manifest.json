@@ -1,7 +1,7 @@
 {
   "name": "秒杀助手",
   "description": "购物秒杀辅助，提升秒杀几率！",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "icons": { "16": "image/seckill-16.png",
            "48": "image/seckill-48.png",
           "128": "image/seckill-128.png" },
