@@ -37,7 +37,7 @@ function getElementsByXPath(STR_XPATH) {
  * @param task
  */
 function dealTask(task) {
-    var count = 0;
+    var count = 1;
     var timer = setInterval(function () {
         if(task.selector == "jQuery") {
             $(task.location).each(function(){

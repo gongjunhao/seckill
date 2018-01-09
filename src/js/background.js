@@ -1,59 +1,32 @@
-//调用接口获取北京时间
-var standerTime = new Date().getTime();
-
+//消息窗口ID
 var dialogId = 0;
 
 //需要打开激活的url
 var tasks = null;
 
+//旧的循环器
+var oldTimer = null;
+
 //检查准备工作URL自动打开（账号登录 商品规格选择 手工）
 var tickTime = 120000;   //120000 2分钟
 
-//北京时间接口路径
-var apiUrl = "https://sapi.k780.com/?app=life.time&appkey=29705&sign=935228281845e8be2ec7481f13e9beee&format=json&jsoncallback=data";
-var startTime = new Date().getTime();
-$.ajax({
-    type          : 'get',
-    async         : false,
-    url           : apiUrl,
-    dataType      : 'jsonp',
-    jsonp         : 'callback',
-    jsonpCallback : 'data',
-    success       : function(data){
-        if(data.success!='1'){
-            console.error(data.msgid+' '+data.msg);
-            console.error("调用接口获取北京时间失败！");
-            processTask(false);
-            return false;
-        }
-        for(var i in data.result){
-            var property=data.result[i];
-            if(i == "timestamp") {
-                standerTime = parseInt(property+"000");
-                var diff = (new Date().getTime() - startTime)/2;
-                standerTime += (diff + 500);
-                processTask(true);
-            }
-        }
-    },
-    error:function(){
-        console.error("调用接口获取北京时间失败！");
-        processTask(false);
-    }
+//popup页面更新时间
+chrome.extension.onConnect.addListener(function(port) {
+    console.log("Connected .....");
+    port.onMessage.addListener(function(msg) {
+        console.log("收到前台时间更新：" + msg);
+        processTask(msg);
+        port.postMessage("时间更新成功");
+    });
 });
 
 /**
  * 每隔500ms去检查任务,异步处理任务
  */
-function processTask(isServerTime) {
-    if(isServerTime) {
-        console.log("use beijing stander timer");
-    } else {
-        console.warn("use the local timer");
-    }
-    setInterval(function () {
+function processTask(standerTime) {
+    console.log("后端开启轮休任务！");
+    var timer = setInterval(function () {
         standerTime += 500;
-        //console.log(formatDateTime(standerTime));
         chrome.storage.local.get({"tasks": new Array()}, function(value) {
             tasks = value.tasks;
             if(tasks != undefined && tasks.length > 0) {
@@ -120,6 +93,10 @@ function processTask(isServerTime) {
             }
         });
     }, 500);
+    if(oldTimer != null) {
+        clearInterval(oldTimer);
+    }
+    oldTimer =  timer;
 }
 
 /* Respond to the user's clicking one of the buttons */
@@ -181,3 +158,5 @@ function formatDateTime(inputTime) {
     second = second < 10 ? ('0' + second) : second;
     return y + '-' + m + '-' + d+' '+h+':'+minute+':'+second;
 }
+
+processTask(new Date().getTime());

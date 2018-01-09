@@ -7,10 +7,17 @@
     <link href="css/index.css" rel="stylesheet" type="text/css">
 </head>
 <body>
-    <span id="close" class="oprBtn">关闭(x)</span>
-    <span id="addNewTask" class="oprBtn">新增秒杀(+)</span>
-    <h2>任务列表</h2>
-    <div class="standerTime">（北京时间：<span id="standTime"></span>）</div>
+    <div class="topheader">
+        <span id="close" class="oprBtn">关闭(x)</span>
+        <span id="addNewTask" class="oprBtn">新增秒杀(+)</span>
+        <h2>任务列表</h2>
+    </div>
+    <div class="standerTime">本机时间：
+        <input type="radio" value="1" name="useLocalTime" checked="checked" title="使用本机时间">是
+        <input type="radio" value="0" name="useLocalTime" title="使用服务器时间">否
+        (<span id="standTime"></span>)
+        <input type="button" style="margin-left: 10px;display: none;" value="校准" id="calibration" title="使用标准服务器北京时间进行校准">
+    </div>
     <span id="message"></span>
 
     <div  id="templateCard">
