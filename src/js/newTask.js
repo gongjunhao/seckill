@@ -55,31 +55,40 @@
 
     //根据光标定位元素
     window.onmouseover = function(e) {
+        //光标锁定
         if(!targetSelected) {
             $(".secKillTarget").removeClass("secKillTarget");
             $(e.target).addClass("secKillTarget");
         }
-        $(e.target).click(function (event) {
-            if($(this).attr("id") == "reset") {
+        //重选
+        $(e.target).click(function (event1) {
+            if ($(this).attr("id") == "reset") {
                 $(".secKillTarget").removeClass("secKillTarget");
                 $("#secKillForm #location").val("");
                 $("#secKillForm #result").text(0);
                 targetSelected = false;
                 return false;
             }
-            if(!targetSelected) {
-                targetSelected = true;
-                var selector = $("#secKillForm input[name=selector]:checked").val();
-                if(selector == "jQuery") {
-                    var path = getDomPath(e.target);
-                    $("#secKillForm #location").val(path.join(' > '));
-                } else {
-                    var path = getXPathTo(e.target);
-                    $("#secKillForm #location").val(path);
+        });
+        //右键选中目标
+        $(e.target).mousedown(function(e){
+            if( e.button == 2 ) {
+                if (!targetSelected) {
+                    targetSelected = true;
+                    var selector = $("#secKillForm input[name=selector]:checked").val();
+                    if (selector == "jQuery") {
+                        var path = getDomPath(e.target);
+                        $("#secKillForm #location").val(path.join(' > '));
+                    } else {
+                        var path = getXPathTo(e.target);
+                        $("#secKillForm #location").val(path);
+                    }
+                    $("#secKillForm #result").text(1);
+                    return false;
                 }
-                $("#secKillForm #result").text(1);
                 return false;
             }
+            return false;
         });
     };
 
