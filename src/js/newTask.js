@@ -84,9 +84,9 @@
                 }
                 $("#secKillForm #result").text(1);
                 alert("目标已选中！");
-                return false;
+                //return false;
             }
-            return false;
+            //return false;
         });
     };
 
