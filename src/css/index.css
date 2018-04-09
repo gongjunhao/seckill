@@ -72,6 +72,20 @@ body {
     overflow: hidden;
 }
 
+.updateInput {
+    display: none;
+}
+
+.content input[type=datetime-local] {
+    width: 200px;
+    background-color: beige;
+}
+
+.content input[type=number] {
+    width: 80px;
+    background-color: beige;
+}
+
 .list {
     line-height: 24px;
     margin-left: 5px;
@@ -94,8 +108,8 @@ body {
 
 .footer li {
     list-style: none;
-    width: 25%;
-
+    width: 20%;
+    text-align: center;
     font-size: 14px;
     color: red;
     float: left;

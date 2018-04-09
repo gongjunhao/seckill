@@ -48,6 +48,7 @@ $(document).ready(function () {
         tasks = value.tasks;
         console.log(tasks);
         if(tasks.length > 0) {
+            $("#message").hide();
             for(var i=0; i<tasks.length; i++) {
                 var card = $("#templateCard").clone();
                 $(card).find(".taskContainer").removeAttr("id");
@@ -64,8 +65,8 @@ $(document).ready(function () {
                 $(card).find("span[datafld='killTime']").text(tasks[i].killTime.replace("T", " "));
                 $(card).find("span[datafld='leftTime']").text(getLeftTime(new Date(tasks[i].killTime).getTime() - standerTime));
                 $(card).find("span[datafld='leftTime']").attr("killTime", new Date(tasks[i].killTime).getTime());
-                $(card).find("span[datafld='frequency']").text(tasks[i].frequency+"ms/次");
-                $(card).find("span[datafld='count']").text(tasks[i].count+"次");
+                $(card).find("span[datafld='frequency']").text(tasks[i].frequency);
+                $(card).find("span[datafld='count']").text(tasks[i].count);
                 $(card).find(".footer ul").attr("id", tasks[i].id);
                 if(new Date(tasks[i].killTime).getTime() - standerTime <= 0) {
                     tasks[i].status  = 2; //已过期
@@ -89,6 +90,7 @@ $(document).ready(function () {
                 $("#message").after($(card).html());
             }
         } else {
+            $("#message").show();
             $("#message").text("暂无秒杀任务，快去新增吧！");
         }
     });
@@ -120,8 +122,64 @@ $(document).ready(function () {
             chrome.notifications.create(dialogId+++"", opt);
         }
 
-        //删除
+        //修改
         if($(this).index() == 3) {
+            var contentDiv = $(this).parent().parent().prev();
+            if($(this).text() == "保存") {
+                currentTask.killTime = $(contentDiv).find("input[name='killTime']").val();
+                currentTask.frequency = $(contentDiv).find("input[name='frequency']").val();
+                currentTask.count = $(contentDiv).find("input[name='count']").val();
+                if(new Date(currentTask.killTime).getTime() - standerTime <= 0) {
+                    currentTask.status = 2; //已过期
+                } else {
+                    currentTask.status = 1; //已暂停
+                }
+                var statusText = "运行中";
+                switch (currentTask.status) {
+                    case 0:
+                        statusText = "运行中";
+                        $(contentDiv).next().find("li[datatype='status']").css("color","green");
+                        break;
+                    case 1:
+                        statusText = "已暂停";
+                        $(contentDiv).next().find("li[datatype='status']").css("color","yellow");
+                        break;
+                    case 2:
+                        statusText = "已过期";
+                        $(contentDiv).next().find("li[datatype='status']").css("color","red");
+                        break;
+                }
+                $(contentDiv).next().find("li[datatype='status']").text(statusText);
+                $(contentDiv).find("span[datafld='killTime']").text(currentTask.killTime.replace("T", " "));
+                $(contentDiv).find("span[datafld='leftTime']").text(getLeftTime(new Date(currentTask.killTime).getTime() - standerTime));
+                $(contentDiv).find("span[datafld='leftTime']").attr("killTime", new Date(currentTask.killTime).getTime());
+                $(contentDiv).find("span[datafld='frequency']").text(currentTask.frequency);
+                $(contentDiv).find("span[datafld='count']").text(currentTask.count);
+                $(contentDiv).find(".update").css("display", "inline");
+                $(contentDiv).find(".updateInput").css("display", "none");
+                var opt = { type: "basic", title: "秒杀助手提醒", message:  currentTask.name + "\n任务修改成功！", iconUrl: "image/success.png" };
+                chrome.notifications.create(dialogId+++"", opt);
+                $(this).text("修改");
+                $(this).css("color","red");
+            } else {
+                if(currentTask.status == 0) {
+                    var opt = { type: "basic", title: "秒杀助手提醒", message:  currentTask.name + "\n修改任务前需暂停任务！", iconUrl: "image/warning.png" };
+                    chrome.notifications.create(dialogId+++"", opt);
+                } else {
+                    $(contentDiv).find(".update").css("display", "none");
+                    $(contentDiv).find(".updateInput").css("display", "inline");
+                    $(contentDiv).find("input[name='killTime']").val(formatDate(new Date().getTime())+"T12:00:01");
+                    $(contentDiv).find("input[name='frequency']").val(currentTask.frequency);
+                    $(contentDiv).find("input[name='count']").val(currentTask.count);
+                    $(this).text("保存");
+                    $(this).css("color","blue");
+                }
+            }
+
+        }
+
+        //删除
+        if($(this).index() == 4) {
             tasks.splice($.inArray(currentTask, tasks), 1);
             $(this).parent().parent().parent().remove();
             var opt = { type: "basic", title: "秒杀助手提醒", message:  currentTask.name + "\n秒杀任务删除成功！", iconUrl: "image/delete.png" };
@@ -251,4 +309,20 @@ function formatDateTime(inputTime) {
     minute = minute < 10 ? ('0' + minute) : minute;
     second = second < 10 ? ('0' + second) : second;
     return y + '-' + m + '-' + d+' '+h+':'+minute+':'+second;
+}
+
+
+/**
+ * 日期格式化
+ * @param inputTime
+ * @returns {string}
+ */
+function formatDate(inputTime) {
+    var date = new Date(inputTime);
+    var y = date.getFullYear();
+    var m = date.getMonth() + 1;
+    m = m < 10 ? ('0' + m) : m;
+    var d = date.getDate();
+    d = d < 10 ? ('0' + d) : d;
+    return y + '-' + m + '-' + d;
 }

@@ -61,7 +61,7 @@
             $(e.target).addClass("secKillTarget");
         }
         //重选
-        $(e.target).click(function (event1) {
+        $(e.target).click(function () {
             if ($(this).attr("id") == "reset") {
                 $(".secKillTarget").removeClass("secKillTarget");
                 $("#secKillForm #location").val("");
@@ -71,21 +71,19 @@
             }
         });
         //右键选中目标
-        $(e.target).mousedown(function(e){
-            if( e.button == 2 ) {
-                if (!targetSelected) {
-                    targetSelected = true;
-                    var selector = $("#secKillForm input[name=selector]:checked").val();
-                    if (selector == "jQuery") {
-                        var path = getDomPath(e.target);
-                        $("#secKillForm #location").val(path.join(' > '));
-                    } else {
-                        var path = getXPathTo(e.target);
-                        $("#secKillForm #location").val(path);
-                    }
-                    $("#secKillForm #result").text(1);
-                    return false;
+        $(e.target).contextmenu(function(rightClickEvent){
+            if (!targetSelected) {
+                targetSelected = true;
+                var selector = $("#secKillForm input[name=selector]:checked").val();
+                if (selector == "jQuery") {
+                    var path = getDomPath(e.target);
+                    $("#secKillForm #location").val(path.join(' > '));
+                } else {
+                    var path = getXPathTo(e.target);
+                    $("#secKillForm #location").val(path);
                 }
+                $("#secKillForm #result").text(1);
+                alert("目标已选中！");
                 return false;
             }
             return false;

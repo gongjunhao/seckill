@@ -9,7 +9,7 @@
 <body>
     <div class="topheader">
         <span id="close" class="oprBtn">关闭(x)</span>
-        <span id="addNewTask" class="oprBtn">新增秒杀(+)</span>
+        <span id="addNewTask" class="oprBtn" title="右键选中目标">新增秒杀(+)</span>
         <h2>任务列表</h2>
     </div>
     <div class="standerTime">本机时间：
@@ -29,10 +29,10 @@
                 <div class="list">URL：<span datafld="url">http://www.jd.com/xxx/xx</span></div>
                 <div class="list">选择器：<span datafld="selector">jquery</span></div>
                 <div class="list">路径：<span datafld="location">#secKillBtn</span></div>
-                <div class="list">秒杀时间：<span datafld="killTime">2017-11-11 12:00:00</span></div>
+                <div class="list">秒杀时间：<span class="update" datafld="killTime">2017-11-11 12:00:00</span><input type="datetime-local" class="updateInput" name="killTime" value="" ></div>
                 <div class="list">剩余时间：<span datafld="leftTime">00:00:00</span></div>
-                <div class="list">秒杀频率：<span datafld="frequency">500ms/次</span></div>
-                <div class="list">秒杀次数<span datafld="count">10次</span></div>
+                <div class="list">秒杀频率：<span class="update" datafld="frequency">500</span><input type="number" name="frequency"  class="updateInput" value="">ms/次</div>
+                <div class="list">秒杀次数: <span class="update" datafld="count">10</span><input type="number" name="count"  class="updateInput" value="">次</div>
             </div>
 
             <div class="footer">
@@ -40,6 +40,7 @@
                     <li datatype="status">状态</li>
                     <li>启动</li>
                     <li>暂停</li>
+                    <li>修改</li>
                     <li>删除</li>
                 </ul>
             </div>
