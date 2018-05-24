@@ -48,7 +48,9 @@ Chrome浏览器 抢购、秒杀插件（秒杀助手） 可自定义 秒杀辅�
 
 
 ### 后续功能(if stared >= 100)
-* 支持cron定时执行（辅助登录并签到，刷积分）
+
+* :tada: star数量已经大于100
+* :black_square_button:支持cron定时执行（辅助登录并签到，刷积分）
 
 
 ### LICENSE
